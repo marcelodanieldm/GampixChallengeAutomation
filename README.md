@@ -11,8 +11,8 @@ Evaluación: Se valorará la calidad de tu código, el uso de buenas prácticas 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Preparación
 Setup
+Install NodeJS
 Use git to clone this repo locally (git clone https://github.com/marcelodanieldm/GampixChallengeAutomation.git)
 Run yarn or npm install
 Run the example test with yarn test to verify that things are working correctly
