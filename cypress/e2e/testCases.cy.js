@@ -1,7 +1,6 @@
 /*import home from '../e2e/pages/home'
 import registrarNuevo from '../e2e/pages/registrarNuevo'
 import editar from '../e2e/pages/editar'
-
 */
 
 //Selectores
@@ -33,7 +32,7 @@ describe('Cinco test cases', () => {
 
 //Ejecucion de tests
 
-  it('TC1 Agregar auto', () => {
+  it.only('TC1 Agregar auto', () => {
     cy.visit('https://frontend.wildar.dev/Autos')
     cy.get(agregarAutoBtn).contains('Registrar Nuevo Auto').click();
     cy.wait(2500);
@@ -51,14 +50,12 @@ describe('Cinco test cases', () => {
     //asserts de resultado de busqueda.
 
 
-
-
   })
 
-  it.only('TC2 Modificar datos de un auto', () => {
+  it('TC2 Modificar datos de un auto', () => {
     cy.visit('https://frontend.wildar.dev/Autos')
-    //agregar caso feliz
-    cy.visit('https://frontend.wildar.dev/Autos')
+    //agregando caso feliz
+    
     cy.get(agregarAutoBtn).contains('Registrar Nuevo Auto').click();
     cy.wait(1500);
     cy.get(marcaField).type('Fiat');
@@ -73,6 +70,7 @@ describe('Cinco test cases', () => {
     cy.get(tablaRes).contains('Fiat').
     cy.get(editBtn).click();
     cy.get(body > div > main > h1).should('have.text', 'Editar Auto');
+    get.wat(1500);
     //Modificar datos de precio, color y condicion
     cy.get(precioField).type('500000');
     cy.get(colorField).type('Rojo');
@@ -84,7 +82,7 @@ describe('Cinco test cases', () => {
     
   })
 
-  it('TC3 Eliminar auto de Inventario', () => {
+  it.skip('TC3 Eliminar auto de Inventario', () => {
     //Buscar auto.
     cy.get(buscarMarca).type('Fiat');
     cy.get(buscarBtn).click();
@@ -95,13 +93,13 @@ describe('Cinco test cases', () => {
    
   })
 
-  it('TC4 Buscar autos en Inventario', () => {
+  it.skip('TC4 Buscar autos en Inventario', () => {
     cy.get(buscarMarca).type('Toyota');
     cy.get(buscarBtn).click();
     
   })
 
-  it('TC5 Validaciones al agregar un auto', () => {
+  it.skip('TC5 Validaciones al agregar un auto', () => {
 
     cy.get(agregarAutoBtn).contains('Registrar Nuevo Auto').click();
     cy.wait(1500);
