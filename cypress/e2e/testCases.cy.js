@@ -25,14 +25,6 @@ const guardarBtn = 'body > div > main > form > div:nth-child(10) > input';
 
 
 
-
-
-
-
-
-
-
-
 describe('Cinco test cases', () => {
 
  // beforeEach(()=>{
@@ -110,6 +102,17 @@ describe('Cinco test cases', () => {
   })
 
   it('TC5 Validaciones al agregar un auto', () => {
+
+    cy.get(agregarAutoBtn).contains('Registrar Nuevo Auto').click();
+    cy.wait(1500);
+    cy.get(marcaField).type('');
+    cy.get(modeloField).type('600');
+    cy.get(chasisField).type('12345678910111213');
+    cy.get(anioField).type('1983');
+    cy.get(precioField).type('40000');
+    cy.get(colorField).type('Amarillo');
+    cy.get(estadoField).select('Nuevo');
+    cy.get(crearBtn).click();
     
   })
 })
