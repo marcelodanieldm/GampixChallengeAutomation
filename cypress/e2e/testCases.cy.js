@@ -17,29 +17,32 @@ const backToHomeLink = 'body > div > main > div > a';
 const agregarAutoBtn = '.mb-3 > .btn';
 
 const buscarMarca = '#marca';
+const buscarModelo = '#modelo';
 const buscarBtn = 'body > div > main > div.card.mb-4.shadow-sm > div.card-body > form > div.row.mt-3 > div > button';
 const tablaRes = 'body > div > main > div.table-responsive > table > tbody > tr > td:nth-child(1)';
 const editBtn = 'a.btn-warning'
 const guardarBtn = 'body > div > main > form > div:nth-child(10) > input';
 
- const tituloHome = 'body > div > main > div.text-center.mb-4 > h1'
- const tituloBusqueda = 'body > div > main > div.card.mb-4.shadow-sm > div.card-header.bg-light > h5'
- const eliminarBtn = 'a.btn.btn-danger.btn-sm'
+ const tituloHome = 'body > div > main > div.text-center.mb-4 > h1';
+ const tituloBusqueda = 'body > div > main > div.card.mb-4.shadow-sm > div.card-header.bg-light > h5';
+ const eliminarBtn = 'a.btn.btn-danger.btn-sm';
  const confirmMensaje = 'h3';
  const eliminarBtnConf = 'input[type="submit"].btn.btn-danger';
  const alertBox = '.alert.alert-info';
+ const alertField = ':nth-child(1) > .text-danger';
 
 
 describe('Cinco test cases', () => {
 
- // beforeEach(()=>{
-    //cy.visit('https://frontend.wildar.dev/Autos')
- // })
+  beforeEach(()=>{
+  
+   cy.getAllLocalStorage().should('be.empty');
+   cy.visit('https://frontend.wildar.dev/Autos')
+  })
 
-//Ejecucion de tests
 
   it('TC1 Agregar auto', () => {
-    cy.visit('https://frontend.wildar.dev/Autos')
+  
     cy.get(agregarAutoBtn).contains('Registrar Nuevo Auto').click();
     cy.wait(2500);
     cy.get(marcaField).type('Toyota');
@@ -54,21 +57,12 @@ describe('Cinco test cases', () => {
     //Buscar por marca
     cy.get(buscarMarca).type('Fiat');
     cy.get(buscarBtn).click();
-    //asserts de resultado de busqueda.
+   
   })
 
   
   it('TC2 Modificar datos de un auto', () => {
-    cy.visit('https://frontend.wildar.dev/Autos')
-    cy.wait(1000);
-    cy.clearLocalStorage();
-    cy.reload(true);
-    cy.getAllLocalStorage().should('be.empty');
-    //cy.clearCookies();
-    //cy.clearCookies().should('be.empty');
-    //cy.visit('https://frontend.wildar.dev/Autos')
-    
-    
+
     //agregando caso feliz
     cy.wait(1500);
     cy.get(agregarAutoBtn).contains('Registrar Nuevo Auto').click();
@@ -88,7 +82,6 @@ describe('Cinco test cases', () => {
     cy.get(tituloBusqueda).should('be.visible');
 
     //buscar por marca
-
     cy.get(buscarMarca).type('Fiat')
     cy.get(tablaRes).contains('Fiat');
     cy.get(editBtn).contains('Editar').click();
@@ -103,19 +96,13 @@ describe('Cinco test cases', () => {
   })
 
   it('TC3 Eliminar auto de Inventario', () => {
-    cy.visit('https://frontend.wildar.dev/Autos')
+
     //Buscar auto.
     cy.get(buscarMarca).type('Fiat');
     cy.get(buscarBtn).click();
-    //validar que lo encontro
-    //click en eliminar
-    //confirmacion de eliminar
-
-    //cy.get(confirmMensaje).should('have.text');
     cy.get(eliminarBtn).click();
     cy.wait(1000);
     cy.get(eliminarBtnConf).should('have.value','Eliminar').click();
-    //cy.get('a[href="/Autos"]').should('have.text', 'Volver a la lista');
     cy.wait(1500);
     //buscar auto eliminado
     cy.get(buscarMarca).type('Fiat')
@@ -126,18 +113,37 @@ describe('Cinco test cases', () => {
   })
  
 
-  it.only('TC4 Buscar autos en Inventario', () => {
-    cy.visit('https://frontend.wildar.dev/Autos')
-    cy.get(buscarMarca).type('Toyota');
+  it('TC4 Buscar autos en Inventario', () => {
+
+     //Caso feliz
+    cy.wait(1500);
+    cy.get(agregarAutoBtn).contains('Registrar Nuevo Auto').click();
+    cy.wait(1500);
+    cy.get(marcaField).type('Volkswagen');
+    cy.get(modeloField).type('Gol');
+    cy.get(chasisField).type('12345678910111214');
+    cy.get(anioField).type('2009');
+    cy.get(precioField).type('30000');
+    cy.get(colorField).type('Gris');
+    cy.get(estadoField).select('Usado');
+    cy.get(crearBtn).click();
+    cy.wait(1000);
+    //Busqueda
+    cy.get(buscarMarca).type('Volkswagen');
+    cy.get(buscarModelo).type('Gol')
     cy.get(buscarBtn).click();
+    //Validaciones de filtro
+    cy.get('td').contains('Gol');
+    cy.get('td').contains('Volkswagen');
+
     
   })
 
-  it.skip('TC5 Validaciones al agregar un auto', () => {
+  it('TC5 Validaciones al agregar un auto', () => {
 
     cy.get(agregarAutoBtn).contains('Registrar Nuevo Auto').click();
     cy.wait(1500);
-    cy.get(marcaField).type('');
+    //cy.get(marcaField).type('');
     cy.get(modeloField).type('600');
     cy.get(chasisField).type('12345678910111213');
     cy.get(anioField).type('1983');
@@ -145,6 +151,8 @@ describe('Cinco test cases', () => {
     cy.get(colorField).type('Amarillo');
     cy.get(estadoField).select('Nuevo');
     cy.get(crearBtn).click();
+    //validacion de obligatoriedad
+    cy.get(alertField).contains('La Marca es obligatoria');
     
   })
 })
