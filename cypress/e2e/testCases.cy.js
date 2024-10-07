@@ -30,6 +30,7 @@ const guardarBtn = 'body > div > main > form > div:nth-child(10) > input';
  const eliminarBtnConf = 'input[type="submit"].btn.btn-danger';
  const alertBox = '.alert.alert-info';
  const alertField = ':nth-child(1) > .text-danger';
+ const buscarEstado = '#estado';
 
 
 describe('Cinco test cases', () => {
@@ -130,7 +131,8 @@ describe('Cinco test cases', () => {
     cy.wait(1000);
     //Busqueda
     cy.get(buscarMarca).type('Volkswagen');
-    cy.get(buscarModelo).type('Gol')
+    cy.get(buscarModelo).type('Gol');
+    cy.get(buscarEstado).should('have.text', 'Todos', 'Usado', 'Nuevo').select('Usado');
     cy.get(buscarBtn).click();
     //Validaciones de filtro
     cy.get('td').contains('Gol');
